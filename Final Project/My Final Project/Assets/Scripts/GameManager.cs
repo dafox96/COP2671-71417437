@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI pauseText;
     public Button startButton;
     public TextMeshProUGUI menuText;
-    public int time = 300;
+    public int time;
     public TextMeshProUGUI timeText;
 
 
@@ -144,6 +144,7 @@ public class GameManager : MonoBehaviour
             if (time == 0)
             {
                 GameOver(true);
+                Destroy(player);
             }
         }
     }
