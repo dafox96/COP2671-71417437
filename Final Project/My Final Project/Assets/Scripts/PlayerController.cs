@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     public float xEdge, zEdge;
     public AudioClip fireSound;
     private AudioSource playerAudio;
+    private GameManager gameManager;
 
     public GameObject projectilePrefab;
 
@@ -17,6 +18,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         playerAudio = GetComponent<AudioSource>();
+        gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
     }
 
     // Update is called once per frame

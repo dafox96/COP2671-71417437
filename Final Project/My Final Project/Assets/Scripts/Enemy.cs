@@ -5,31 +5,41 @@ public class Enemy : MonoBehaviour
 {
     public float acceleration;
     private Rigidbody enemyRb;
-    public float xEdge, zEdge;
+    private float xEdge = 125;
+    private float zEdge = 100;
     public float speed;
+    private GameManager gameManager;
     // Start is called before the first frame update
     void Start()
     {
         enemyRb = GetComponent<Rigidbody>();
+        gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(Vector3.forward * Time.deltaTime * speed);
-        if (Math.Abs(transform.position.z) > zEdge)
+        if (Math.Abs(transform.position.z) > zEdge || Math.Abs(transform.position.x) > xEdge)
         {
-            transform.position = new Vector3(transform.position.x, transform.position.y, -transform.position.z);
+            Destroy(gameObject);
         }
-        if (Math.Abs(transform.position.x) > xEdge)
+        if (gameManager.gameActive)
         {
-            transform.position = new Vector3(-transform.position.x, transform.position.y, transform.position.z);
+            transform.Translate(Vector3.forward * Time.deltaTime * speed);
         }
     }
 
     void OnTriggerEnter(Collider other)
     {
-        Destroy(gameObject);
+        if (other.tag == "Player")
+        {
+            gameManager.GameOver(false);
+        }
+        else
+        {
+            gameManager.updateScore(gameManager.waveNumber);
+        }
         Destroy(other.gameObject);
+        Destroy(gameObject);
     }
 }
